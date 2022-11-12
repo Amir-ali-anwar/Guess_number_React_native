@@ -6,40 +6,54 @@ import {
   Button,
   TouchableWithoutFeedback,
   Keyboard,
+  TextInput,
+  Alert,
 } from "react-native";
 import Card from "../components/Card";
 import colors from "../constants/colors";
 import Input from "../components/Input";
 const StartGameSceen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
-  const [confirmed,Setconfirmed]=useState(false);
-  const [selectedNumber,SetSelectedNumber]=useState('')
-  const NumberInputHanlder=(inputText)=>{
-  setEnteredValue(inputText.replace(/[^0-9]/g, ""));
-  }
-  const resetInputHandler = () => {
-    setEnteredValue('');
+  const [confirmed, Setconfirmed] = useState(false);
+  const [selectedNumber, SetSelectedNumber] = useState("");
+  const NumberInputHandler = (inputText) => {
+    console.log("inputtext", inputText);
+    setEnteredValue(inputText.replace(/[^0-9]/g, ""));
   };
-   const confirmInputHandler = () => {
-    const chooseNumber= parseInt(enteredValue)
-    if(chooseNumber ===NaN || chooseNumber<=0 ||chooseNumber>99){
-      return 
+
+  const resetInputHandler = () => {
+    setEnteredValue("");
+  };
+  const confirmInputHandler = () => {
+    console.log("confirm handler");
+    const chooseNumber = parseInt(enteredValue);
+    if (isNaN(chooseNumber) || chooseNumber <= 0 || chooseNumber > 99) {
+      Alert.alert(
+        "Invalid number!",
+        "Number has to be a number between 1 and 99.",
+        [{ text: "Okay", style: "destructive", onPress: resetInputHandler }]
+      );
+      return;
     }
-     Setconfirmed(true);
-     setEnteredValue("");
-     SetSelectedNumber(chooseNumber);
-   };
-   let confirmedOutPut;
-   if (confirmed) {
-     confirmedOutPut = <View>Choose Number:{selectedNumber}</View>;
-   }
+    Setconfirmed(true);
+    setEnteredValue("");
+    SetSelectedNumber(chooseNumber);
+  };
+  let confirmedOutPut;
+  if (confirmed) {
+    confirmedOutPut = (
+      <View>
+        <Text>Choose Number:{selectedNumber}</Text>
+      </View>
+    );
+  }
   return (
-    //  <TouchableWithoutFeedback>
     <View style={styles.screen}>
+      {confirmedOutPut}
       <Text style={styles.title}>StartGameSceen</Text>
       <Card style={styles.inputContainer}>
         <Text>Select a Number</Text>
-        <Input
+        <TextInput
           style={styles.input}
           blurOnSubmit
           autoCapitalize="none"
@@ -47,8 +61,18 @@ const StartGameSceen = (props) => {
           keyboardType="number-pad"
           maxLength={2}
           value={enteredValue}
-          onChangeText={NumberInputHanlder}
+          onChangeText={NumberInputHandler}
         />
+        {/* <Input
+          style={styles.input}
+          blurOnSubmit
+          autoCapitalize="none"
+          autoCorrect={false}
+          keyboardType="number-pad"
+          maxLength={2}
+          onChangeText={NumberInputHandler}
+          value={enteredValue}
+        /> */}
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
             <Button
@@ -67,7 +91,6 @@ const StartGameSceen = (props) => {
         </View>
       </Card>
     </View>
-    //  </TouchableWithoutFeedback>
   );
 };
 const styles = StyleSheet.create({
@@ -90,20 +113,23 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     paddingHorizontal: 15,
-    marginTop:20
+    marginTop: 20,
   },
   button: {
-    width:100,
+    width: 100,
     color: "#000",
     fontSize: "12px",
   },
-  buttonStyle:{
-    backgroundColor:'red'
-  }
-  ,
+  buttonStyle: {
+    backgroundColor: "red",
+  },
   input: {
     width: 50,
     textAlign: "center",
+    height: 30,
+    borderBottomColor: "grey",
+    borderBottomWidth: 1,
+    marginVertical: 10,
   },
   summaryContainer: {
     marginTop: 20,
