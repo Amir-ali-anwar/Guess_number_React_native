@@ -7,15 +7,13 @@ const StartGameSceen = (props) => {
   const [confirmed, Setconfirmed] = useState(false);
   const [selectedNumber, SetSelectedNumber] = useState("");
   const NumberInputHandler = (inputText) => {
-    console.log("inputtext", inputText);
-    setEnteredValue(inputText.replace(/[^0-9]/g, ""));
+   setEnteredValue(inputText.replace(/[^0-9]/g, ""));
   };
 
   const resetInputHandler = () => {
     setEnteredValue("");
   };
   const confirmInputHandler = () => {
-    console.log("confirm handler");
     const chooseNumber = parseInt(enteredValue);
     if (isNaN(chooseNumber) || chooseNumber <= 0 || chooseNumber > 99) {
       Alert.alert(

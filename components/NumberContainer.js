@@ -17,10 +17,12 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     alignItems: "center",
     justifyContent: "center",
+    height:50
   },
   number: {
     color: Colors.accent,
     fontSize: 22,
+    height:35
   },
 });
 export default NumberContainer;
