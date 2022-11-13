@@ -1,42 +1,52 @@
-import React, { useRef, useState } from "react";
-import { View, Text, StyleSheet, Button,Alert } from "react-native";
+import React, { useRef, useState,useEffect } from "react";
+import { View, Text, StyleSheet, Button, Alert } from "react-native";
 import { NumberContainer, Card } from "../components";
 const generateRandomBetween = (min, max, exclude) => {
   min = Math.ceil(min);
   max = Math.floor(max);
- const rndNum = Math.floor(Math.random() * (max - min)) + min;
+  const rndNum = Math.floor(Math.random() * (max - min)) + min;
   if (rndNum === exclude) {
-   return generateRandomBetween(min, max, exclude);
+    return generateRandomBetween(min, max, exclude);
   } else {
     return rndNum;
   }
 };
 const GameScreen = (props) => {
-  console.log("userNumber game s", props.userChoice);
-   const initialGuess = generateRandomBetween(1, 100, props.userChoice);
+  const {onGameOver,userChoice}= props
+  const initialGuess = generateRandomBetween(1, 100, props.userChoice);
   const [currentGuess, SetCurrentGuess] = useState(initialGuess);
+  const [rounds,setRounds]= useState(0)  
   console.log("currentGuess", currentGuess);
-  const CurrentLow =useRef(1)
-  const CurrentHigh =useRef(100)
+  const CurrentLow = useRef(1);
+  const CurrentHigh = useRef(100);
+  useEffect(() => {
+    if (currentGuess === userChoice) {
+      onGameOver(rounds);
+    }
+  }, [currentGuess, userChoice, onGameOver]);
+  
   const guessHanlder = (direction) => {
     if (
-      (direction === "lower" && currentGuess < props.userChoice) ||
-      (direction === "greater" && currentGuess > props.userChoice)
+      (direction === "lower" && currentGuess < userChoice) ||
+      (direction === "greater" && currentGuess > userChoice)
     ) {
-      Alert.alert("Don't lie!", "You know that this is wrong...",[{text:'Sorry',style:'cancel'}]);
-      return 
+      Alert.alert("Don't lie!", "You know that this is wrong...", [
+        { text: "Sorry", style: "cancel" },
+      ]);
+      return;
     }
-    if (direction ==='lower') {
+    if (direction === "lower") {
       CurrentLow.current = currentGuess;
-    }else{
-      CurrentHigh.current = currentGuess;
+    } else {
+      CurrentHigh.current = currentGuess + 1;
     }
-     const nextNumber = generateRandomBetween(
-       CurrentLow.current,
-       CurrentLow.current,
-       currentGuess
-     );
-     SetCurrentGuess(nextNumber);
+    const nextNumber = generateRandomBetween(
+      CurrentLow.current,
+      CurrentHigh.current,
+      currentGuess
+    );
+    SetCurrentGuess(nextNumber);
+    setRounds(currRounds=>currRounds +1);
   };
   return (
     <View style={styles.screen}>
@@ -46,17 +56,13 @@ const GameScreen = (props) => {
         <View style={styles.button}>
           <Button
             title="LOWER"
-            onPress={() => {
-              guessHanlder.bind(this, "lower");
-            }}
+            onPress={() => guessHanlder("lower")}
           />
         </View>
         <View style={styles.button}>
           <Button
             title="GREATER"
-            onPress={() => {
-              guessHanlder.bind(this, "greater");
-            }}
+            onPress={() => guessHanlder("greater")}
           />
         </View>
       </Card>
@@ -102,9 +108,9 @@ const styles = StyleSheet.create({
     color: "#000",
     fontSize: "12px",
   },
-  number:{
+  number: {
     // height:400
-  }
+  },
 });
 
 export default GameScreen;

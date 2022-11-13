@@ -1,5 +1,4 @@
 import GameScreen from "./GameScreen";
 import StartGameSceen from "./StartGameSceen";
-export {
-    GameScreen,StartGameSceen
-}
+import GameOver from './GameOver'
+export { GameScreen, StartGameSceen, GameOver };
