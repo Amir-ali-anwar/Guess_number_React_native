@@ -6,7 +6,7 @@ const generateRandomBetween = (min, max, exclude) => {
   max = Math.floor(max);
   const rndNum = Math.floor(Math.random() * (max - min)) + min;
   if (rndNum === exclude) {
-    return generateRandomBetween(min, max, exclude);
+    return  (min, max, exclude);
   } else {
     return rndNum;
   }
@@ -16,7 +16,6 @@ const GameScreen = (props) => {
   const initialGuess = generateRandomBetween(1, 100, props.userChoice);
   const [currentGuess, SetCurrentGuess] = useState(initialGuess);
   const [rounds,setRounds]= useState(0)  
-  console.log("currentGuess", currentGuess);
   const CurrentLow = useRef(1);
   const CurrentHigh = useRef(100);
   useEffect(() => {

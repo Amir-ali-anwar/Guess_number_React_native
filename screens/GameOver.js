@@ -1,9 +1,15 @@
 import React from 'react'
+import colors from "../constants/colors";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 const GameOver = (props) => {
-  return <View style={styles.screen}>
-    <Text>The Game is over</Text>
-  </View>;
+  return (
+    <View style={styles.screen}>
+      <Text>The Game is over</Text>
+      <Text>Number of rounds:{props.roundsNumber}</Text>
+      <Text>Number Was:{props.userNumber}</Text>
+      <Button title="NEW Game" onPress={onRestart} />
+    </View>
+  );
 }
 
 const styles = StyleSheet.create({
@@ -34,7 +40,7 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   highlight: {
-    color: Colors.primary,
+    color: colors.primary,
     fontFamily: "open-sans-bold",
   },
 });

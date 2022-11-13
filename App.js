@@ -11,11 +11,19 @@ export default function App() {
   const GaneOverHandler=(numberofRounds)=>{
     SetGuessRounds(numberofRounds);
   }
+  const configureNewGameHanlder=()=>{
+    SetGuessRounds(0);
+    SetUserNumber(null)
+  }
   let componentContent = <StartGameSceen onStartGame={startHanlder} />;
   if(userNumber && guessRounds <=0){
     componentContent = (<GameScreen userChoice={userNumber} onGameOver={GaneOverHandler} />);
   }else if (guessRounds) {
-    <GameOver />
+    <GameOver
+      userNumber={userNumber}
+      roundsNumber={guessRounds}
+      onRestart={configureNewGameHanlder}
+    />;
   }
   return (
     <View style={styles.container}>
@@ -24,7 +32,8 @@ export default function App() {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
- 
+  screen: {
+    flex: 1,
+  },
 });
