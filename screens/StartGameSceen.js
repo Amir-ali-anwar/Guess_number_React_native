@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, TextInput, Alert } from "react-native";
 import colors from "../constants/colors";
-import { Card, NumberContainer } from "../components";
+import { Card, NumberContainer, BodyText } from "../components";
 const StartGameSceen = (props) => {
   const [enteredValue, setEnteredValue] = useState("");
   const [confirmed, Setconfirmed] = useState(false);
@@ -38,7 +38,7 @@ const StartGameSceen = (props) => {
   if (confirmed) {
     confirmedOutPut = (
       <Card>
-        <Text>You selected</Text>
+        <BodyText>You selected</BodyText>
         <NumberContainer>{selectedNumber}</NumberContainer>
         <Button
           color={colors.primary}
@@ -53,7 +53,7 @@ const StartGameSceen = (props) => {
       {confirmedOutPut && confirmedOutPut}
       <Text style={styles.title}>StartGameSceen</Text>
       <Card style={styles.inputContainer}>
-        <Text>Select a Number</Text>
+        <Text style={styles.startScreen}>Select a Number</Text>
         <TextInput
           style={styles.input}
           blurOnSubmit
@@ -63,21 +63,21 @@ const StartGameSceen = (props) => {
           maxLength={2}
           value={enteredValue}
           onChangeText={NumberInputHandler}
-          />
+        />
         <View style={styles.buttonContainer}>
           <View style={styles.button}>
             <Button
               title="Reset"
               onPress={resetInputHandler}
               color={colors.accent}
-              />
+            />
           </View>
           <View style={styles.button}>
             <Button
               title="Confirm"
               onPress={confirmInputHandler}
               color={colors.primary}
-              />
+            />
           </View>
         </View>
       </Card>
@@ -93,10 +93,18 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     marginVertical: 10,
+    fontFamily: "open-sans-bold",
+  },
+  startScreen:{
+    fontFamily: "open-sans",
+    fontWeight:'bold',
+    fontSize:20
+    
   },
   inputContainer: {
     width: 300,
     maxWidth: "80%",
+    marginTop:30,
     alignItems: "center",
   },
   buttonContainer: {

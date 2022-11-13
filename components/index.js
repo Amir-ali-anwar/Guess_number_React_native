@@ -1,4 +1,6 @@
 import Card from "./Card";
 import Header from './Header'
 import NumberContainer from "./NumberContainer";
-export { Card, Header, NumberContainer };
+import BodyText from "./BodyText";
+import TitleText from './TitleText'
+export { Card, Header, NumberContainer, BodyText, TitleText };
